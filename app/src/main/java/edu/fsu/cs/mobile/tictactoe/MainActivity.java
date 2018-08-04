@@ -12,10 +12,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnBu
     public static final String xWINS = "xwins";
     public static final String oWINS = "owins";
     public static final String TIES = "ties";
-    public static final String PASS = "pass";
     private MainFragment mFirstFragment;
-
-
+    public static final String PASS = "pass";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

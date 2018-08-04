@@ -1,6 +1,7 @@
 package edu.fsu.cs.mobile.tictactoe;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class TicTacToeFragment extends Fragment implements View.OnClickListener {
@@ -44,7 +44,7 @@ public class TicTacToeFragment extends Fragment implements View.OnClickListener 
         Password = preferences.getString(MainActivity.PASS,"");
 
         View rootView = inflater.inflate(R.layout.fragment_tic_tac_toe, container, false);
-
+        passAttempt=  "";
 
 
         playersturn = rootView.findViewById(R.id.turn);
@@ -91,12 +91,26 @@ public class TicTacToeFragment extends Fragment implements View.OnClickListener 
         if (check()) {
             if (Xturn) {
                 player1Wins();
-                replaceFragment();
+                if (Password != "" && Password.equals(passAttempt)) {
+                    //Toast.makeText(getActivity(),"you have got the password", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(), NoteMainActivity.class);
+                    startActivity(intent);
+                }
+                else
+                    replaceFragment();
+
 
 
             } else {
                 player2Wins();
-                replaceFragment();
+                if (Password != "" && Password.equals(passAttempt)) {
+
+                    Intent intent = new Intent(getActivity(), NoteMainActivity.class);
+                    startActivity(intent);
+                }
+                else
+                    replaceFragment();
+
             }
         } else if (roundCount == 9) {
             ties++;
@@ -105,12 +119,6 @@ public class TicTacToeFragment extends Fragment implements View.OnClickListener 
             SharedPreferences.Editor editor = preferences.edit();
             editor.putInt(MainActivity.TIES, ties);
             editor.commit();
-
-            if (Password != "" && Password.equals(passAttempt)) {
-                Toast.makeText(getActivity(),"you have got the password", Toast.LENGTH_SHORT).show();
-            }
-
-
             if(Password == "")
             {
                 Password = passAttempt;
@@ -118,10 +126,20 @@ public class TicTacToeFragment extends Fragment implements View.OnClickListener 
                 editor = preferences.edit();
                 editor.putString(MainActivity.PASS, Password);
                 editor.commit();
+                replaceFragment();
+
+            }
+            else if (Password != "" && Password.equals(passAttempt)) {
+
+                Intent intent = new Intent(getActivity(), NoteMainActivity.class);
+                startActivity(intent);
             }
 
 
-            replaceFragment();
+
+
+
+
         } else {
             Xturn = !Xturn;
         }
@@ -256,7 +274,7 @@ public class TicTacToeFragment extends Fragment implements View.OnClickListener 
 
         Xplayer++;
         ties = 0;
-        String yo = Password;
+
         SharedPreferences preferences = getActivity().getSharedPreferences(MainActivity.xWINS, Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(MainActivity.xWINS, Xplayer);
@@ -269,7 +287,9 @@ public class TicTacToeFragment extends Fragment implements View.OnClickListener 
         editor.commit();
 
         if (Password != "" && Password.equals(passAttempt)) {
-            Toast.makeText(getContext(),"you have got the password", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(getActivity(), NoteMainActivity.class);
+            startActivity(intent);
         }
 
         if(Password == "")
@@ -290,11 +310,13 @@ public class TicTacToeFragment extends Fragment implements View.OnClickListener 
     private void player2Wins() {
         Oplayer++;
         ties = 0;
-        String yo = Password;
+
         SharedPreferences preferences = getActivity().getSharedPreferences(MainActivity.oWINS, Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(MainActivity.oWINS, Oplayer);
         editor.commit();
+
+
 
         preferences = getActivity().getSharedPreferences(MainActivity.TIES, Activity.MODE_PRIVATE);
         editor = preferences.edit();
@@ -302,7 +324,9 @@ public class TicTacToeFragment extends Fragment implements View.OnClickListener 
         editor.commit();
 
         if (!Password .equals("")&& Password.equals(passAttempt)) {
-            Toast.makeText(getContext(),"you have got the password", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(getActivity(), NoteMainActivity.class);
+            startActivity(intent);
         }
 
 
