@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">tictactoexta</string>
+    <string name="app_name">tictactoe</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_note_main">Notes</string>
 </resources>
